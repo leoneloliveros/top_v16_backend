@@ -1,6 +1,11 @@
 const express = require('express')
+const connectDB = require('./config/database')
+
+
+const user = require('./api/user')
 
 const app = express()
+
 
 const notes = [
   { id: 1, title: 'Express'},
@@ -8,7 +13,6 @@ const notes = [
   { id: 3, title: 'Docker' }
 ]
 
-app.use(express.json()) //middleware
 
 //find
 //reduce
@@ -133,8 +137,19 @@ app.put('/api/notes/:id', (req, res) => {
 
 
 
-const PORT = 8080
+const PORT = 3000
 
 app.listen(PORT, () => {
+
+
+
+  //connection to mongo atlas
+  connectDB(); 
+
+
+  app.use(express.json()) //middleware
+
+  app.use(user)
+
   console.log('Server is running with express')
 })

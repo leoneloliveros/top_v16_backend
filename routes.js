@@ -1,11 +1,9 @@
 const user = require('./api/user')
-// const comment = require('./api/comment')
+const product = require('./api/product')
 
 function routes(app) {
   app.use('/api/users', user)
-  // app.use(comment)
-  // app.use(likes)
-  // app.use(compras)
+  app.use('/api/products', product)
 
 }
 

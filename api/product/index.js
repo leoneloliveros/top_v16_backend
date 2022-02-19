@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { isAuthenticated, hasRole } = require('../../auth/auth.services');
 const { 
   getAllProducts,
   getProductById,
@@ -11,10 +12,10 @@ const router = Router()
 
 //CRUD
 router.get('/', getAllProducts)
-router.get('/:id', getProductById)
-router.post('/', createProduct)
+router.get('/:id', isAuthenticated(), getProductById)
+router.post('/', hasRole(['Developer', 'Admin']), createProduct)
 router.put('/:id', updateProduct)
-router.delete('/:id', deleteProduct)
+router.delete('/:id', hasRole('Developer'), deleteProduct)
 
 
 module.exports = router

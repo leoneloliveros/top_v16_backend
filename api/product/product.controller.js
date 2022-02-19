@@ -1,16 +1,21 @@
 const Product = require('./product.model')
 
 async function getAllProducts(req, res) {
-  const { status } = req.query
+  const { page, limit, find } = req.query
+
+  const skip = limit * ( page - 1)
+
   try {
     // con los usuarios
-    const product = await Product.find({ status }) 
+    const findValue = new RegExp(find, "gi") || undefined
+    const product = await Product.find({ name: findValue}, { name: 1, description: 1}).skip(skip).limit(limit)
     res.status(200).json(product)
   } catch(err) {
     console.log(err)
     res.status(400).json({ error: err})
   }
 }
+
 
 async function getProductById(req, res) {
   const { id } = req.params
@@ -25,8 +30,11 @@ async function getProductById(req, res) {
 
 async function createProduct(req, res) {
   const info = req.body;
+  const user = req.user
+  console.log("🚀 ~ file: product.controller.js ~ line 28 ~ createProduct ~ info", user)
+  
   try {
-    const product = await Product.create(info)
+    const product = await Product.create({ ...info, userData: { user, role: user.role} })
     res.status(200).json(product)
   } catch(err) {
     console.log(err)

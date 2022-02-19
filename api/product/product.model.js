@@ -12,6 +12,17 @@ const ProductSchema = new mongoose.Schema(
       required: true,
       lowercase: true
     },
+    userData: {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+      role: {
+        type: String,
+        required: true
+      }
+    },
+    
   },
   {
     timestamps: true

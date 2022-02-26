@@ -1,6 +1,34 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
+const CreditCardSchema = new mongoose.Schema({
+  expMonth: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  expYear: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  mask: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  tokenId: {
+    type: String,
+    required: true,
+    trim: true
+  },
+})
+
 const UserSchema = new mongoose.Schema(
   {
     firstName: {
@@ -37,7 +65,8 @@ const UserSchema = new mongoose.Schema(
       required: true
     },
     passwordResetToken: String,
-    passwordResetExpires: Date
+    passwordResetExpires: Date,
+    creditCards: [CreditCardSchema]
   },
   {
     timestamps: true
@@ -68,6 +97,7 @@ UserSchema.pre('save', async function(next) {
 
 UserSchema.methods.comparePassword = async function (password) {
   const user = this
+  console.log(user.password, password)
   return await bcrypt.compare(password, user.password)
 }
 

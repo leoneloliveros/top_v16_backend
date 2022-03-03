@@ -27,7 +27,14 @@ const CreditCardSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-})
+}, { _id: false }
+)
+
+const BillingSchema = new mongoose.Schema({
+  creditCards: [CreditCardSchema],
+  customerId: String,
+}, { _id: false }
+)
 
 const UserSchema = new mongoose.Schema(
   {
@@ -66,7 +73,7 @@ const UserSchema = new mongoose.Schema(
     },
     passwordResetToken: String,
     passwordResetExpires: Date,
-    creditCards: [CreditCardSchema]
+    billing: BillingSchema
   },
   {
     timestamps: true
@@ -74,12 +81,14 @@ const UserSchema = new mongoose.Schema(
 )
 
 UserSchema.pre('save', async function(next) {
+  console.log('user pre save')
   const user = this
   try {
-    if (!user.isModified('password') || !user.isModified('creditCardNumber') ) {
+    if (!user.isModified('password')) {
       return next()
     }
   
+    console.log('paso por el password')
     //Generar el hash y encriptar la contraseña
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(user.password, salt)

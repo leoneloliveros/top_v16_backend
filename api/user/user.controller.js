@@ -40,6 +40,7 @@ async function createUser(req, res, next) {
       console.log("🚀 ~ file: user.controller.js ~ line 39 ~ createUser ~ info", info)
       
       const user = await User.create(info)
+      console.log("🚀 ~ file: user.controller.js ~ line 43 ~ createUser ~ user", user)
 
       const email = {
         to: user.email,

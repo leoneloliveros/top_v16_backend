@@ -1,0 +1,13 @@
+/**
+ * @openapi
+ * /api/products:
+ *  get:
+ *    tags:
+ *    - AllProducts
+ *    description: Get all products
+ *    responses:
+ *      200:
+ *        description: Getting all products
+ *      400:
+ *        description: Error on Database
+ */

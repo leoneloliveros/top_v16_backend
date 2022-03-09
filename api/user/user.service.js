@@ -6,6 +6,10 @@ async function getUserByEmail(email) {
   return user
 }
 
+async function findUser() {
+  return await User.find({ }) 
+}
+
 async function findOneUser(query) {
   const user = await User.findOne(query)
   return user

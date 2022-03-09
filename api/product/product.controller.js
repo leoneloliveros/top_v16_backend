@@ -33,6 +33,7 @@ async function getAllProducts(req, res) {
  * @returns response of products by Id
  */
 async function getProductById(req, res) {
+  console.log(' entro en el controlador')
   const { id } = req.params
   try {
     const product = await Product.findById(id) 

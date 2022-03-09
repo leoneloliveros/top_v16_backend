@@ -7,7 +7,7 @@ async function getAllUsers(req, res) {
   console.log("🚀 ~ file: user.controller.js ~ line 5 ~ getAllUsers ~ status", status)
   //llegamos
   try {
-    const users = await User.find({ }) 
+    const users = await findUser()
     res.status(200).json({ users })
   } catch(err) {
     console.log(err)

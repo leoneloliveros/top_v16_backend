@@ -9,6 +9,8 @@ const {
 } = require('./product.controller')
 
 const router = Router()
+const { ProductSchema, ParamsNewUpdate } = require('./product.schema')
+const validateRequest = require('../../middleware/validateRequest')
 
 //CRUD
 
@@ -47,7 +49,7 @@ const router = Router()
 router.get('/', isAuthenticated(), getAllProducts)
 
 
-router.get('/:id', isAuthenticated(), getProductById)
+router.get('/:id', validateRequest(ProductSchema, 'params'), getProductById)
 
 /***
  * @openapi
@@ -75,8 +77,9 @@ router.get('/:id', isAuthenticated(), getProductById)
  *        description: Bad request
  *
  */
-router.post('/', hasRole(['Developer', 'Admin']), createProduct)
-router.put('/:id', updateProduct)
+router.post('/', hasRole(['Developer', 'Admin']),  validateRequest(ProductSchema, 'body'), createProduct)
+router.put('/:id', validateRequest(ProductSchema, 'params'), validateRequest(ProductSchema, 'body'), updateProduct)
+router.put('/:id/:name', validateRequest(ParamsNewUpdate, 'params'), validateRequest(ProductSchema, 'body'), updateProduct)
 router.delete('/:id', hasRole('Developer'), deleteProduct)
 
 

@@ -46,7 +46,7 @@ const validateRequest = require('../../middleware/validateRequest')
  *        description: Unauthorized userr, necesita token valido
  */
 
-router.get('/', isAuthenticated(), getAllProducts)
+router.get('/', getAllProducts)
 
 
 router.get('/:id', validateRequest(ProductSchema, 'params'), getProductById)

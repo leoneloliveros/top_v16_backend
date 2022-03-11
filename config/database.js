@@ -6,15 +6,12 @@ const URI = process.env.MONGO_URI
 
 async function connectDB() {
 
-  // await mongoose.connect(URI).then((resp) => {
-  //   console.log(resp)
-  //   console.log('MongoDB is connected')
-  // }).catch((err) => {
+  // await mongoose.connect(URI).catch((err) => {
   //   console.log(err)
   // })
 
   try {
-   await mongoose.connect(URI)
+   await mongoose.connect(URI, { useNewUrlParser: true })
   } catch(err) {
     console.log(err)
     process.exit(1);

@@ -4,7 +4,7 @@
   "description": "API Rest para e-commerce",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "MONGO_URI=mongodb+srv://backendTop16:a4b3c2d1@cluster0.q3p1w.mongodb.net/top16-test?retryWrites=true&w=majority jest",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },

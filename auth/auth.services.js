@@ -14,7 +14,7 @@ function signToken(payload) {
 function isAuthenticated() {
   return compose().use(async (req, res, next) => {
     const authHeader = req.headers?.authorization
-    console.log('Llego aqui')
+    console.log('Llego aqui', req.headers.authorization)
   
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized' })
@@ -24,6 +24,7 @@ function isAuthenticated() {
     //const token = authHeader.split(' ')[1] //1
     const [, token] = authHeader.split(' ')
     const payload = await validateToken(token)
+    console.log('payload', payload)
     if (!payload) {
       return res.status(401).json({ message: 'Unauthorized' })
     }
@@ -35,6 +36,8 @@ function isAuthenticated() {
     }
   
     req.user = user
+    console.log("🚀 ~ file: auth.services.js ~ line 39 ~ returncompose ~ user", user)
+    
     next()
   })
 }
@@ -49,6 +52,7 @@ async function validateToken(token) {
 }
 
 function hasRole(roles) {
+
   return compose()
     .use(isAuthenticated())
     .use(async (req, res, next)=> {

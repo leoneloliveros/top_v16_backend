@@ -1,14 +1,18 @@
 const request = require('supertest');
+const axios = require('axios')
 const mongoose = require('mongoose')
-const app = require('../app')
+const app = require('../../app')
 
-afterAll(() => {
-  mongoose.disconnect()
+afterAll(async () => {
+  await mongoose.disconnect()
 })
 
 test("get helloWorld", async () => {
-  jest.setTimeout(30000);
   const response = await request(app).get('/helloWorld')
-
-  expect(response.statusCode).toBe(200)
+  expect(response.statusCode).toBe(201) //validacion
 })
+
+
+// Preparar el ambiente
+// ejecutamos los servicios/ los controladores
+// validacion

@@ -2,7 +2,10 @@ const User = require('./user.model')
 const get = require('lodash/get')
 
 async function getUserByEmail(email) {
+console.log("🚀 ~ file: user.service.js ~ line 5 ~ getUserByEmail ~ email", email)
+  
   const user = await User.findOne({ email }) || {}
+  console.log("🚀 ~ file: user.service.js ~ line 8 ~ getUserByEmail ~ user", user)
   return user
 }
 

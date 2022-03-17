@@ -14,12 +14,8 @@ async function getAllProducts(req, res) {
 
   try {
     const findValue = new RegExp(find, "gi") || undefined
-    console.log("🚀 ~ file: product.controller.js ~ line 49 ~ createProduct ~ process.env.NODE_ENV", process.env.NODE_ENV)
-    if (process.env.NODE_ENV === 'development') {
-      return res.status(200).json({ message: 'data listed'})
-    }
     const product = await Product.find({ name: findValue}, { name: 1, description: 1}).skip(skip).limit(limit)
-    res.status(200).json(product)
+    res.status(200).json({ page, limit, data: product })
   } catch(err) {
     console.log(err)
     res.status(400).json({ error: err})
@@ -46,15 +42,10 @@ async function getProductById(req, res) {
 
 async function createProduct(req, res) {
   const info = req.body;
-  const user = req.user
-  console.log("🚀 ~ file: product.controller.js ~ line 28 ~ createProduct ~ info", user)
+  const user = req.user;
+  console.log("🚀 ~ file: product.controller.js ~ line 46 ~ createProduct ~ user", user)
   
   try {
-    console.log("🚀 ~ file: product.controller.js ~ line 49 ~ createProduct ~ process.env.NODE_ENV", process.env.NODE_ENV)
-    if (process.env.NODE_ENV === 'development') {
-      console.log('development', )
-      return res.status(200).json({ message: 'data created', ...info, ...user })
-    }
     const product = await Product.create({ ...info, userData: { user, role: user.role} })
     res.status(200).json(product)
   } catch(err) {
